@@ -6,7 +6,6 @@ import Swal from "sweetalert2";
 export default function Register() {
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
-  const [role, setRole] = useState("pegawai"); // Default role
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
@@ -16,7 +15,7 @@ export default function Register() {
       await axios.post("/api/auth/register", {
         name,
         password,
-        role,
+        role: "pegawai", // role dipaksa default
       });
 
       Swal.fire({
@@ -24,6 +23,7 @@ export default function Register() {
         title: "Berhasil Register",
         text: "Silahkan login",
       });
+
       navigate("/login");
     } catch (error) {
       Swal.fire({
@@ -49,39 +49,38 @@ export default function Register() {
                   <input
                     type="text"
                     className="form-control"
-                    placeholder="Masukkan Username"
                     value={name}
                     onChange={(e) => setName(e.target.value)}
                     required
                   />
                 </div>
+
                 <div className="mb-3">
                   <label className="form-label">Password</label>
                   <input
                     type="password"
                     className="form-control"
-                    placeholder="Masukkan Password"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     required
                   />
                 </div>
-                <div className="mb-3">
-                  <label className="form-label">Role</label>
-                  <select
-                    className="form-select"
-                    value={role}
-                    onChange={(e) => setRole(e.target.value)}
-                  >
-                    <option value="pegawai">Pegawai</option>
-                    <option value="admin">Admin</option>
-                  </select>
-                </div>
+
                 <button type="submit" className="btn btn-primary w-100 mb-3">
                   Register
                 </button>
+
                 <div className="text-center">
-                  Sudah punya akun? <a href="/login" onClick={(e) => { e.preventDefault(); navigate("/login"); }}>Login di sini</a>
+                  Sudah punya akun?{" "}
+                  <a
+                    href="/login"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      navigate("/login");
+                    }}
+                  >
+                    Login di sini
+                  </a>
                 </div>
               </form>
             </div>
